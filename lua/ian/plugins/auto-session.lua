@@ -1,3 +1,5 @@
+-- restore your tabs in your session after you close the nvim tab
+-- ws to save session, wr to restore session
 return {
   "rmagatti/auto-session",
   config = function()

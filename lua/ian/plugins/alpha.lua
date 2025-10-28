@@ -1,3 +1,4 @@
+-- the greeter section
 return {
   "goolord/alpha-nvim",
   event = "VimEnter",
