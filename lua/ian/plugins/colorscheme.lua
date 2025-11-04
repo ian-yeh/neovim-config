@@ -1,4 +1,5 @@
 return {
+  -- tokyo colorscheme
   {
     "folke/tokyonight.nvim",
     priority = 1000, -- make sure to load this before all the other start plugins
@@ -34,7 +35,20 @@ return {
         end,
       })
       -- load the colorscheme here
-      vim.cmd([[colorscheme tokyonight]])
+      --vim.cmd([[colorscheme tokyonight]])
     end,
   },
+  -- add catppuccin
+  {
+    "catppuccin/nvim",
+    name = "catppuccin",
+    lazy = false,
+    priority = 1000,
+    config = function()
+      require("catppuccin").setup({
+        flavour = "mocha", -- latte, frappe, macchiato, mocha
+      })
+      vim.cmd([[colorscheme catppuccin]]) -- latte, frappe, macchiato, mocha
+    end,
+  }
 }

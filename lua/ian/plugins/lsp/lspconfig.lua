@@ -115,5 +115,37 @@ return {
         },
       },
     })
-  end,
+
+    vim.lsp.config("pyright", {
+      before_init = function(_, config)
+        -- Auto-detect virtual environment
+        local venv_paths = {
+          vim.fn.getcwd() .. "/.venv/bin/python",
+          vim.fn.getcwd() .. "/venv/bin/python",
+          vim.fn.getcwd() .. "/.venv/Scripts/python.exe",
+          vim.fn.getcwd() .. "/venv/Scripts/python.exe",
+          vim.fn.getcwd() .. "/backend/.venv/bin/python",
+          vim.fn.getcwd() .. "/backend/venv/bin/python",
+        }
+
+        for _, path in ipairs(venv_paths) do
+          if vim.fn.filereadable(path) == 1 then
+            config.settings.python.pythonPath = path
+            break
+          end
+        end
+      end,
+      settings = {
+        python = {
+          analysis = {
+            autoSearchPaths = true,
+            useLibraryCodeForTypes = true,
+            diagnosticMode = "workspace",
+            typeCheckingMode = "basic",
+          },
+        },
+      },
+    })
+
+  end
 }

@@ -35,6 +35,7 @@ return {
         "graphql",
         "emmet_ls",
         "eslint",
+        "pyright",
       },
     })
 
