@@ -71,7 +71,6 @@ return {
       },
     })
 
-    -- Enable LSP servers using the new vim.lsp.config API
     vim.lsp.enable({
       "ts_ls",
       "html",
@@ -84,12 +83,11 @@ return {
       "lua_ls",
     })
 
-    -- Default config for all servers
     vim.lsp.config("*", {
       capabilities = capabilities,
     })
 
-    -- Lua specific config
+    -- Lua LSP config
     vim.lsp.config("lua_ls", {
       capabilities = capabilities,
       settings = {
@@ -109,7 +107,7 @@ return {
       },
     })
 
-    -- Python specific config
+    -- Python LSP config
     vim.lsp.config("pyright", {
       capabilities = capabilities,
       before_init = function(_, config)
