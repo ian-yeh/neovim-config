@@ -6,7 +6,6 @@ return {
     -- recommended settings from nvim-tree documentation
     vim.g.loaded_netrw = 1
     vim.g.loaded_netrwPlugin = 1
-
     -- set keymaps
     local keymap = vim.keymap -- for conciseness
     keymap.set("n", "<leader>ee", "<cmd>NvimTreeToggle<CR>", { desc = "Toggle file explorer" })
@@ -14,19 +13,6 @@ return {
     keymap.set("n", "<leader>ec", "<cmd>NvimTreeCollapse<CR>", { desc = "Collapse file explorer" })
     keymap.set("n", "<leader>er", "<cmd>NvimTreeRefresh<CR>", { desc = "Refresh file explorer" })
     
-    local function open_tab_silent(node)
-      local api = require("nvim-tree.api")
-      local view = require("nvim-tree.view")
-      
-      -- Open the file in a new tab
-      vim.cmd("tabnew " .. node.absolute_path)
-      
-      -- Keep nvim-tree open in the new tab if desired
-      if not view.is_visible() then
-        api.tree.open()
-      end
-    end
-
     local function my_on_attach(bufnr)
       local api = require('nvim-tree.api')
       local function opts(desc)
@@ -38,70 +24,146 @@ return {
       local function open_file_in_new_tab()
         local node = api.tree.get_node_under_cursor()
         if node.type == "file" then
-          -- Open file in new tab
           vim.cmd("tabnew " .. node.absolute_path)
-          -- Switch back to the previous tab temporarily to keep tree context
           vim.cmd("tabprevious")
-          -- Open nvim-tree in the new tab
           vim.cmd("tabnext")
-          api.tree.open()
-          -- Focus on the file buffer instead of nvim-tree
-          vim.cmd("wincmd l") -- move cursor to the right window (the file)
+          vim.cmd("wincmd l")
         end
       end
       -- Custom mappings for tabs
       vim.keymap.set('n', 't', open_file_in_new_tab, opts('Open in New Tab'))
       vim.keymap.set('n', '<C-t>', open_file_in_new_tab, opts('Open in New Tab (Ctrl+t)'))
+      
+      -- ADD THESE: Useful additional keymaps
+      vim.keymap.set('n', 'l', api.node.open.edit, opts('Open'))  -- 'l' to open file/folder
+      vim.keymap.set('n', 'h', api.node.navigate.parent_close, opts('Close Directory'))  -- 'h' to close folder
+      vim.keymap.set('n', 'v', api.node.open.vertical, opts('Open: Vertical Split'))  -- 'v' for vertical split
+      vim.keymap.set('n', 's', api.node.open.horizontal, opts('Open: Horizontal Split'))  -- 's' for horizontal split
     end
-    -- Apply the custom keymap
+    
     nvimtree.setup({
-      -- ... your existing config ...
       on_attach = my_on_attach,
-      -- ... rest of config
+      
+      -- ADD: Sort folders before files
+      sort_by = "case_sensitive",
+      
       view = {
-        width = 35,
+        width = 35,  -- Slightly wider for better readability
         relativenumber = true,
+        -- ADD: Show file size
+        side = "left",
       },
-      -- change folder arrow icons
+      
       renderer = {
+        -- ADD: Show git status and file icons
+        add_trailing = false,
+        group_empty = true,  -- Collapse empty folders
+        highlight_git = true,
+        full_name = false,
+        highlight_opened_files = "icon",  -- Highlight open files
+        root_folder_label = ":~:.",  -- Show path relative to home
+        
         indent_markers = {
           enable = true,
+          inline_arrows = true,  -- Better looking arrows
+          icons = {
+            corner = "└",
+            edge = "│",
+            item = "│",
+            none = " ",
+          },
         },
+        
         icons = {
+          webdev_colors = true,  -- Colorful file icons
+          git_placement = "before",
+          show = {
+            file = true,
+            folder = true,
+            folder_arrow = true,
+            git = true,
+          },
           glyphs = {
+            default = "",
+            symlink = "",
+            bookmark = "",
             folder = {
-              arrow_closed = "", -- arrow when folder is closed
-              arrow_open = "", -- arrow when folder is open
+              arrow_closed = "",
+              arrow_open = "",
+              default = "",
+              open = "",
+              empty = "",
+              empty_open = "",
+              symlink = "",
+              symlink_open = "",
+            },
+            git = {
+              unstaged = "✗",
+              staged = "✓",
+              unmerged = "",
+              renamed = "➜",
+              untracked = "★",
+              deleted = "",
+              ignored = "◌",
             },
           },
         },
       },
-      -- disable window_picker for
-      -- explorer to work well with
-      -- window splits
+      
       actions = {
         open_file = {
           window_picker = {
             enable = false,
           },
-          quit_on_open = false, -- don't close tree when opening file
-          resize_window = false, -- don't resize when opening file
+          quit_on_open = false,
+          resize_window = true,  -- CHANGED: Auto-resize when opening files
         },
       },
+      
       filters = {
-        custom = { ".DS_Store" },
+        custom = { ".DS_Store", "^.git$", "node_modules", ".cache" },  -- ADD: More ignores
         dotfiles = false,
       },
+      
       git = {
+        enable = true,  -- ADDED: Explicitly enable git
         ignore = false,
+        show_on_dirs = true,  -- Show git status on folders
+        timeout = 400,
       },
-      -- Configure tab behavior
+      
+      -- ADD: Show file diagnostics (errors/warnings)
+      --diagnostics = {
+      --  enable = true,
+      --  show_on_dirs = true,
+      --  icons = {
+      --    hint = "",
+      --    info = "",
+      --    warning = "",
+      --    error = "",
+      --  },
+      --},
+      
+      -- ADD: Better update behavior
+      update_focused_file = {
+        enable = true,  -- Automatically find current file in tree
+        update_root = false,
+      },
+      
       tab = {
         sync = {
-          open = true,   -- opens the tree when a new tab is created
-          close = true,  -- closes the tree when a tab is closed
+          open = true,
+          close = true,
         },
       },
     })
+    
+    -- Transparency
+    vim.cmd([[
+      highlight NvimTreeNormal guibg=NONE ctermbg=NONE
+      highlight NvimTreeEndOfBuffer guibg=NONE ctermbg=NONE
+      highlight NvimTreeVertSplit guibg=NONE ctermbg=NONE
+      highlight NvimTreeNormalNC guibg=NONE ctermbg=NONE
+    ]])
   end
 }
