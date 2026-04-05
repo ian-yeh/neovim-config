@@ -30,3 +30,12 @@ opt.clipboard:append("unnamedplus")
 -- split windows
 opt.splitright = true
 opt.splitbelow = true
+
+-- autoread - automatically update when file changes
+opt.autoread = true
+
+-- trigger autoread when changing buffers or after `focusgained` 
+vim.api.nvim_create_autocmd({ "BufEnter", "CursorHold", "CursorHoldI", "FocusGained" }, {
+  command = "checktime",
+  pattern = "*",
+})

@@ -63,11 +63,23 @@ return {
     vim.diagnostic.config({
       signs = {
         text = {
-          [vim.diagnostic.severity.ERROR] = " ",
-          [vim.diagnostic.severity.WARN] = " ",
+          [vim.diagnostic.severity.ERROR] = "",
+          [vim.diagnostic.severity.WARN] = "",
           [vim.diagnostic.severity.HINT] = "󰠠 ",
-          [vim.diagnostic.severity.INFO] = " ",
+          [vim.diagnostic.severity.INFO] = "", 
         },
+      },
+      virtual_text = true,
+      update_in_insert = false,
+      underline = true,
+      severity_sort = true,
+      float = {
+        focusable = false,
+        style = "minimal",
+        border = "rounded",
+        source = "always",
+        header = "",
+        prefix = "",
       },
     })
 
@@ -85,6 +97,19 @@ return {
 
     vim.lsp.config("*", {
       capabilities = capabilities,
+    })
+
+    -- Ignore diagnostics during source % to prevent false errors
+    vim.api.nvim_create_autocmd("SourcePre", {
+      callback = function()
+        vim.diagnostic.enable(false)
+      end,
+    })
+
+    vim.api.nvim_create_autocmd("SourcePost", {
+      callback = function()
+        vim.diagnostic.enable(true)
+      end,
     })
 
     -- Lua LSP config
@@ -133,7 +158,13 @@ return {
             autoSearchPaths = true,
             useLibraryCodeForTypes = true,
             diagnosticMode = "workspace",
-            typeCheckingMode = "basic",
+            typeCheckingMode = "off", -- Reduced false positives on working code
+            diagnosticSeverityOverrides = {
+              reportGeneralTypeIssues = "none",
+              reportOptionalMemberAccess = "none",
+              reportOptionalSubscript = "none",
+              reportPrivateImportUsage = "none",
+            },
           },
         },
       },
