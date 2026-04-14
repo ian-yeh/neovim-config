@@ -40,6 +40,7 @@ return {
         "vimdoc",
         "c",
         "rust",
+        "typst",
       },
       incremental_selection = {
         enable = true,

@@ -39,6 +39,12 @@ return {
       vim.keymap.set('n', 'h', api.node.navigate.parent_close, opts('Close Directory'))  -- 'h' to close folder
       vim.keymap.set('n', 'v', api.node.open.vertical, opts('Open: Vertical Split'))  -- 'v' for vertical split
       vim.keymap.set('n', 's', api.node.open.horizontal, opts('Open: Horizontal Split'))  -- 's' for horizontal split
+      vim.keymap.set('n', 'n', api.fs.create, opts('Create Node')) -- 'n' to create file/folder
+      vim.keymap.set('n', 'd', api.fs.remove, opts('Delete Node')) -- 'd' to delete file/folder
+      vim.keymap.set('n', 'r', api.fs.rename, opts('Rename Node')) -- 'r' to rename file/folder
+      vim.keymap.set('n', 'y', api.fs.copy.node, opts('Copy Node')) -- 'y' to copy file/folder
+      vim.keymap.set('n', 'x', api.fs.cut, opts('Cut Node')) -- 'x' to cut file/folder
+      vim.keymap.set('n', 'p', api.fs.paste, opts('Paste Node')) -- 'p' to paste file/folder    
     end
     
     nvimtree.setup({
@@ -48,7 +54,9 @@ return {
       sort_by = "case_sensitive",
       
       view = {
-        width = 35,  -- Slightly wider for better readability
+        width = function()
+          return math.floor(vim.opt.columns:get() * 0.2) -- 20% of screen width
+        end,
         relativenumber = true,
         -- ADD: Show file size
         side = "left",
@@ -61,7 +69,7 @@ return {
         highlight_git = true,
         full_name = false,
         highlight_opened_files = "icon",  -- Highlight open files
-        root_folder_label = ":~:.",  -- Show path relative to home
+        root_folder_label = false,
         
         indent_markers = {
           enable = true,
@@ -88,22 +96,22 @@ return {
             symlink = "",
             bookmark = "",
             folder = {
-              arrow_closed = "",
-              arrow_open = "",
-              default = "",
-              open = "",
-              empty = "",
-              empty_open = "",
-              symlink = "",
-              symlink_open = "",
+              arrow_closed = "▶",
+              arrow_open = "▼",
+              default = "", -- Folder icon
+              open = "", -- Open folder icon
+              empty = "",
+              empty_open = "",
+              symlink = "",
+              symlink_open = "",
             },
             git = {
               unstaged = "✗",
               staged = "✓",
-              unmerged = "",
+              unmerged = "",
               renamed = "➜",
               untracked = "★",
-              deleted = "",
+              deleted = "🗑",
               ignored = "◌",
             },
           },
@@ -121,7 +129,7 @@ return {
       },
       
       filters = {
-        custom = { ".DS_Store", "^.git$", "node_modules", ".cache" },  -- ADD: More ignores
+        custom = { ".DS_Store", "^.git$", "node_modules", ".cache", "fuse", "gvfs", "__pycache__" },  -- ADD: More ignores
         dotfiles = false,
       },
       
@@ -133,16 +141,16 @@ return {
       },
       
       -- ADD: Show file diagnostics (errors/warnings)
-      --diagnostics = {
-      --  enable = true,
-      --  show_on_dirs = true,
-      --  icons = {
-      --    hint = "",
-      --    info = "",
-      --    warning = "",
-      --    error = "",
-      --  },
-      --},
+      diagnostics = {
+        enable = true,
+        show_on_dirs = true,
+        icons = {
+          hint = "",
+          info = "",
+          warning = "",
+          error = "",
+        },
+      },
       
       -- ADD: Better update behavior
       update_focused_file = {
@@ -152,8 +160,8 @@ return {
       
       tab = {
         sync = {
-          open = true,
-          close = true,
+          open = false,
+          close = false,
         },
       },
     })
