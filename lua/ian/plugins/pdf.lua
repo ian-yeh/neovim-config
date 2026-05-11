@@ -2,8 +2,7 @@ return {
   -- snacks.nvim is required for pdfreader.nvim image rendering
   {
     "folke/snacks.nvim",
-    priority = 1000,
-    lazy = false,
+    lazy = true,
     opts = {
       -- Enable only image module (disable unused modules for faster startup)
       bigfile = { enabled = false },
@@ -29,8 +28,8 @@ return {
   },
   {
     "r-pletnev/pdfreader.nvim",
-    -- Load immediately to ensure keymaps are set
-    lazy = false,
+    ft = "pdf",
+    keys = { { "<leader>fp", desc = "Find PDF files" } },
     dependencies = {
       "folke/snacks.nvim",
       "nvim-telescope/telescope.nvim",

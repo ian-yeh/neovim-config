@@ -14,11 +14,7 @@ return {
         clear_in_insert_mode = false,
         download_remote_images = true,
         only_render_image_at_cursor = false,
-        filetypes = { "markdown", "vimwiki" },
-      },
-      neorg = {
-        enabled = true,
-        filetypes = { "norg" },
+        filetypes = { "markdown" },
       },
     },
     max_width = nil,
@@ -38,7 +34,7 @@ return {
     
     -- Set conceallevel for markdown (required for images to embed inline)
     vim.api.nvim_create_autocmd("FileType", {
-      pattern = { "markdown", "vimwiki" },
+      pattern = { "markdown" },
       callback = function()
         vim.opt_local.conceallevel = 2
       end,

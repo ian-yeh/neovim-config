@@ -4,7 +4,7 @@ return {
   dependencies = {
     "hrsh7th/cmp-nvim-lsp",
     { "antosha417/nvim-lsp-file-operations", config = true },
-    { "folke/neodev.nvim", opts = {} },
+    { "folke/lazydev.nvim", ft = "lua", opts = {} },
   },
   config = function()
     local cmp_nvim_lsp = require("cmp_nvim_lsp")
@@ -114,7 +114,6 @@ return {
 
     -- Lua LSP config
     vim.lsp.config("lua_ls", {
-      capabilities = capabilities,
       settings = {
         Lua = {
           diagnostics = {
@@ -134,7 +133,6 @@ return {
 
     -- Python LSP config
     vim.lsp.config("pyright", {
-      capabilities = capabilities,
       before_init = function(_, config)
         local venv_paths = {
           vim.fn.getcwd() .. "/.venv/bin/python",
@@ -172,19 +170,16 @@ return {
 
     -- Emmet config
     vim.lsp.config("emmet_ls", {
-      capabilities = capabilities,
       filetypes = { "html", "typescriptreact", "javascriptreact", "css", "sass", "scss", "less", "svelte" },
     })
 
     -- GraphQL config
     vim.lsp.config("graphql", {
-      capabilities = capabilities,
       filetypes = { "graphql", "gql", "svelte", "typescriptreact", "javascriptreact" },
     })
 
     -- Svelte config
     vim.lsp.config("svelte", {
-      capabilities = capabilities,
       on_attach = function(client, bufnr)
         vim.api.nvim_create_autocmd("BufWritePost", {
           pattern = { "*.js", "*.ts" },
