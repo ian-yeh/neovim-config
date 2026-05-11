@@ -24,4 +24,4 @@ vim.api.nvim_create_autocmd("ColorScheme", {
   end,
 })
 
-vim.cmd([[colorscheme tokyonight-night]])
+-- vim.cmd([[colorscheme tokyonight-night]])

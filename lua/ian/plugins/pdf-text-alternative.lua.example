@@ -1,0 +1,10 @@
+-- Alternative: nvim-pdf for text-based PDF viewing (much faster)
+-- This uses pdftotext instead of image conversion
+
+return {
+  "makerbot/nvim-pdf",
+  ft = { "pdf" },
+  config = function()
+    -- No heavy image dependencies, uses pdftotext
+  end,
+}

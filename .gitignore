@@ -1,0 +1,12 @@
+# Environment variables
+.env
+
+# Compiled Lua cache
+*.lua~
+
+# Lazy.nvim lockfile (optional - uncomment if you don't want to commit it)
+# lazy-lock.json
+
+# OS files
+.DS_Store
+Thumbs.db

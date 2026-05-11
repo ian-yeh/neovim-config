@@ -1,8 +1,28 @@
+-- Function to load .env file and get the colorscheme
+local function load_env_var(name)
+  local env_path = vim.fn.stdpath("config") .. "/.env"
+  local file = io.open(env_path, "r")
+  if file then
+    for line in file:lines() do
+      local key, value = line:match("^([^=]+)=(.*)$")
+      if key and value and key == name then
+        file:close()
+        return value:gsub("^%s*(.-)%s*$", "%1") -- trim whitespace
+      end
+    end
+    file:close()
+  end
+  return nil
+end
+
+local colorscheme = load_env_var("NVIM_COLORSCHEME") or "tokyonight"
+
 return {
   -- tokyo colorscheme
   {
     "folke/tokyonight.nvim",
     priority = 200,
+    lazy = colorscheme ~= "tokyonight",
     config = function()
       local bg_highlight = "#143652"
       local bg_search = "#0A64AC"
@@ -11,7 +31,6 @@ return {
       local fg_dark = "#B4D0E9"
       local fg_gutter = "#627E97"
       local border = "#547998"
-      
       require("tokyonight").setup({
         style = "night",
         transparent = true,  -- Enable transparency
@@ -27,7 +46,6 @@ return {
           -- colors.bg_popup = bg_dark  -- REMOVE THIS
           -- colors.bg_sidebar = bg_dark  -- REMOVE THIS
           -- colors.bg_statusline = bg_dark  -- REMOVE THIS
-          
           -- Keep these custom colors
           colors.bg_highlight = bg_highlight
           colors.bg_search = bg_search
@@ -40,21 +58,25 @@ return {
           colors.fg_sidebar = fg_dark
         end,
       })
-      vim.cmd([[colorscheme tokyonight]])
+      if colorscheme == "tokyonight" then
+        vim.cmd([[colorscheme tokyonight]])
+      end
     end,
   },
   -- catppuccin
   {
     "catppuccin/nvim",
     name = "catppuccin",
-    lazy = false,
+    lazy = colorscheme ~= "catppuccin",
     priority = 200,
     config = function()
       require("catppuccin").setup({
         flavour = "mocha",
         transparent_background = true,
       })
-      --vim.cmd([[colorscheme catppuccin]])
+      if colorscheme == "catppuccin" then
+        vim.cmd([[colorscheme catppuccin]])
+      end
     end,
   },
 }
