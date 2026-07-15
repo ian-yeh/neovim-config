@@ -14,8 +14,8 @@ return {
       "williamboman/mason-lspconfig.nvim",
     },
     keys = {
-      -- Keymap <leader>tp to toggle the Typst preview
-      { "<leader>tp", ":TypstPreview<CR>", mode = "n", desc = "Toggle Typst Preview" },
+      -- Keymap <leader>tw to toggle the Typst preview (watch)
+      { "<leader>tw", ":TypstPreview<CR>", mode = "n", desc = "Toggle Typst Preview" },
     },
     config = function()
       require("typst-preview").setup({
@@ -60,16 +60,7 @@ return {
         ensure_installed = { "tinymist" },
       })
 
-      -- Optional: Basic LSP keymaps (add these if you don't have them configured elsewhere)
-      vim.keymap.set("n", "gd", vim.lsp.buf.definition, { desc = "LSP Go to Definition" })
-      vim.keymap.set("n", "gD", vim.lsp.buf.declaration, { desc = "LSP Go to Declaration" })
-      vim.keymap.set("n", "gr", vim.lsp.buf.references, { desc = "LSP Go to References" })
-      vim.keymap.set("n", "gI", vim.lsp.buf.implementation, { desc = "LSP Go to Implementation" })
-      vim.keymap.set("n", "<leader>k", vim.lsp.buf.hover, { desc = "LSP Hover Documentation" })
-      vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, { desc = "LSP Rename" })
-      vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, { desc = "LSP Code Action" })
-      vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "Go to previous diagnostic" })
-      vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "Go to next diagnostic" })
+      -- LSP keymaps are defined globally in lua/ian/plugins/lsp/lspconfig.lua
     end,
   },
 }

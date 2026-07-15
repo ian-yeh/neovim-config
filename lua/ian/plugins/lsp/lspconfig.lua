@@ -93,6 +93,8 @@ return {
       "emmet_ls",
       "pyright",
       "lua_ls",
+      "gopls",
+      "clangd",
     })
 
     vim.lsp.config("*", {
