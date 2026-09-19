@@ -13,7 +13,7 @@ vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({ { import = "ian.plugins" }, { import = "ian.plugins.lsp"} }, {
   checker = {
-    enbaled = true,
+    enabled = true,
     notify = false,
   },
   change_detection = {

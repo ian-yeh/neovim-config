@@ -1,6 +1,5 @@
 return {
   "nvim-tree/nvim-tree.lua",
-  dependencies = "nvim-tree/nvim-web-devicons",
   config = function()
     local nvimtree = require("nvim-tree")
     -- recommended settings from nvim-tree documentation
@@ -55,7 +54,7 @@ return {
       
       view = {
         width = function()
-          return math.floor(vim.opt.columns:get() * 0.2) -- 20% of screen width
+          return math.floor(vim.opt.columns:get() * 0.25) -- 25% of screen width
         end,
         relativenumber = true,
         -- ADD: Show file size
@@ -66,9 +65,10 @@ return {
         -- ADD: Show git status and file icons
         add_trailing = false,
         group_empty = true,  -- Collapse empty folders
-        highlight_git = true,
+        highlight_git = "all",  -- color filename text by git status, not just icon
+        highlight_modified = "all",  -- color filename text for unsaved buffers
         full_name = false,
-        highlight_opened_files = "icon",  -- Highlight open files
+        highlight_opened_files = "all",  -- Highlight open files
         root_folder_label = false,
         
         indent_markers = {
@@ -160,8 +160,8 @@ return {
       
       tab = {
         sync = {
-          open = false,
-          close = false,
+          open = true,
+          close = true,
         },
       },
     })

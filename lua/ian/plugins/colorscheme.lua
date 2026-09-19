@@ -73,9 +73,34 @@ return {
       require("catppuccin").setup({
         flavour = "mocha",
         transparent_background = true,
+        integrations = {
+          nvim_tree = true,
+          gitsigns = true,
+          lualine = {},
+          dropbar = { enabled = true },
+          indent_blankline = { enabled = true },
+          native_lsp = { enabled = true },
+        },
       })
       if colorscheme == "catppuccin" then
         vim.cmd([[colorscheme catppuccin]])
+      end
+    end,
+  },
+  -- github (matches Ghostty "GitHub Dark High Contrast" theme)
+  {
+    "projekt0n/github-nvim-theme",
+    name = "github-theme",
+    lazy = colorscheme ~= "github_dark_high_contrast",
+    priority = 200,
+    config = function()
+      require("github-theme").setup({
+        options = {
+          transparent = true,
+        },
+      })
+      if colorscheme == "github_dark_high_contrast" then
+        vim.cmd([[colorscheme github_dark_high_contrast]])
       end
     end,
   },

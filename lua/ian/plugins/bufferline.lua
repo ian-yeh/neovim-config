@@ -1,11 +1,24 @@
 return {
   "akinsho/bufferline.nvim",
-  dependencies = { "nvim-tree/nvim-web-devicons" },
   version = "*",
   opts = {
     options = {
       mode = "tabs",
       separator_style = "slant",
+      offsets = {
+        {
+          filetype = "NvimTree",
+          text = "File Explorer",
+          text_align = "left",
+          separator = true,
+        }
+      },
+      custom_filter = function(buf_number)
+        if vim.bo[buf_number].filetype == "NvimTree" then
+          return false
+        end
+        return true
+      end,
     },
   },
 }

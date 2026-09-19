@@ -23,6 +23,13 @@ return {
       -- Only enable what we need for PDFs
       image = {
         enabled = true,
+        -- no inline images inside documents (html, markdown, ...)
+        doc = { enabled = false },
+        -- default formats minus pdf, so pdfreader.nvim owns *.pdf
+        formats = {
+          "png", "jpg", "jpeg", "gif", "bmp", "webp", "tiff",
+          "heic", "avif", "mp4", "mov", "avi", "mkv", "webm", "icns",
+        },
       },
     },
   },
@@ -35,20 +42,16 @@ return {
       "nvim-telescope/telescope.nvim",
     },
     config = function()
+      -- pdfreader only checks $TERM (validation.lua:6), and ghostty reports
+      -- xterm-256color here. tmux is already handled by its own $TMUX check.
+      if vim.env.TERM_PROGRAM == "ghostty" and not vim.env.TMUX then
+        vim.env.TERM = "xterm-ghostty"
+      end
+
       -- Plugin sets up keymaps on BufEnter automatically:
       -- n = next page, p = prev page
       -- z = zoom in, q = zoom out, e = reset zoom
       require("pdfreader").setup()
-
-      -- Just set text mode for faster loading
-      vim.api.nvim_create_autocmd("BufEnter", {
-        pattern = "*.pdf",
-        callback = function()
-          vim.defer_fn(function()
-            vim.cmd("PDFReader setViewMode text")
-          end, 300)
-        end,
-      })
 
       -- Telescope integration for finding PDFs
       vim.keymap.set("n", "<leader>fp", function()

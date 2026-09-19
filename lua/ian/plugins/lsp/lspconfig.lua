@@ -20,7 +20,14 @@ return {
         keymap.set("n", "gR", "<cmd>Telescope lsp_references<CR>", opts)
 
         opts.desc = "Go to declaration"
-        keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
+        keymap.set("n", "gD", function()
+          local client = vim.lsp.get_clients({ bufnr = ev.buf })[1]
+          if client and client.supports_method("textDocument/declaration") then
+            vim.lsp.buf.declaration()
+          else
+            vim.lsp.buf.definition()
+          end
+        end, opts)
 
         opts.desc = "Show LSP definitions"
         keymap.set("n", "gd", "<cmd>Telescope lsp_definitions<CR>", opts)
@@ -95,6 +102,7 @@ return {
       "lua_ls",
       "gopls",
       "clangd",
+      "tinymist",
     })
 
     vim.lsp.config("*", {
@@ -190,6 +198,15 @@ return {
           end,
         })
       end,
+    })
+
+    -- Typst config
+    vim.lsp.config("tinymist", {
+      settings = {
+        tinymist = {
+          exportPdf = "onSave",
+        },
+      },
     })
   end,
 }

@@ -4,6 +4,8 @@ local opt = vim.opt
 
 opt.relativenumber = true
 opt.number = true
+opt.laststatus = 3 -- global statusline
+opt.fillchars = { eob = " " } -- hide end-of-buffer ~ characters
 
 -- tabbing and indentation
 opt.tabstop = 2
@@ -20,7 +22,7 @@ opt.smartcase = true
 opt.cursorline = true
 
 -- colors
-opt.termguicolors = false
+opt.termguicolors = true
 opt.background = "dark"
 opt.signcolumn = "yes"
 

@@ -15,14 +15,16 @@ Modes: **n** normal, **i** insert, **v/x** visual, **t** terminal.
 | nvim-autopairs | Auto-close brackets/quotes | `InsertEnter` |
 | nvim-ts-autotag | Auto-close/rename HTML/JSX tags | `InsertEnter` |
 | bufferline.nvim | Tab/buffer bar (tabs mode) | on load |
-| tokyonight / catppuccin | Colorschemes (via `.env` `NVIM_COLORSCHEME`) | on load |
+| tokyonight / catppuccin / github-theme | Colorschemes (via `.env` `NVIM_COLORSCHEME`) | on load |
 | Comment.nvim | Commenting (ts-context aware) | `BufReadPre` |
 | doorbell.nvim | Local personal plugin | always |
 | dressing.nvim | Better UI selects/inputs | `VeryLazy` |
-| image.nvim | Inline image rendering (kitty) | `VeryLazy` |
-| indent-blankline (ibl) | Indent guides (`┊`) | `BufReadPre` |
+| dropbar.nvim | Winbar breadcrumbs (file/symbol path) | `BufReadPost` |
+| gitsigns.nvim | Git hunk signs, blame, stage/reset | `BufReadPre` |
+| indent-blankline (ibl) | Indent guides (`▏`) | `BufReadPre` |
+| mini.icons | Icon provider (replaces nvim-web-devicons) | always |
 | plenary.nvim | Lua lib (dependency) | on demand |
-| lualine.nvim | Statusline (custom theme) | on load |
+| lualine.nvim | Statusline (theme follows active colorscheme) | on load |
 | markdown-preview.nvim | Browser markdown preview | `ft=markdown` |
 | nvim-cmp | Completion engine | `InsertEnter` |
 | nvim-tree | File explorer | on load |
@@ -39,7 +41,7 @@ Modes: **n** normal, **i** insert, **v/x** visual, **t** terminal.
 | which-key.nvim | Popup keybind hints | `VeryLazy` |
 | nvim-lspconfig | LSP client config | `BufReadPre` |
 | mason.nvim | LSP/tool installer | on load |
-| typst-preview + tinymist | Typst preview & LSP | `ft=typst` |
+| typst-preview.nvim | Typst preview (tinymist is the LSP, see below) | `ft=typst` |
 
 ---
 
@@ -125,7 +127,7 @@ Inside a picker: `<C-k>` prev result, `<C-j>` next result, `<C-q>` send selectio
 
 ## LSP (lspconfig)
 
-Active on `LspAttach`. Servers: ts_ls, html, cssls, tailwindcss, svelte, graphql, emmet_ls, pyright, lua_ls, gopls, clangd (typst via tinymist).
+Active on `LspAttach`. Servers: ts_ls, html, cssls, tailwindcss, svelte, graphql, emmet_ls, pyright, lua_ls, gopls, clangd, tinymist.
 
 | Key | Action |
 |---|---|
@@ -229,14 +231,18 @@ Defaults: `gcc` toggle line, `gc` + motion / visual block, `gbc` block comment. 
 
 ---
 
-## Images (image.nvim)
+## Git (gitsigns)
 
 | Key | Action |
 |---|---|
-| `<leader>ic` | Clear images |
-| `<leader>ir` | Refresh images |
-
-Opens `.png/.jpg/.jpeg/.gif/.webp/.avif` directly as images; inline markdown images enabled.
+| `]h` | Next git hunk |
+| `[h` | Previous git hunk |
+| `<leader>hs` | Stage hunk |
+| `<leader>hr` | Reset hunk |
+| `<leader>hp` | Preview hunk |
+| `<leader>hb` | Blame line (full) |
+| `<leader>tb` | Toggle inline current-line blame |
+| `<leader>hd` | Diff this file |
 
 ---
 
@@ -293,4 +299,4 @@ Auto-exports PDF on save (tinymist).
 | `:LspRestart` | Restart language servers |
 | `:TSUpdate` | Update treesitter parsers |
 | `:checkhealth` | Diagnose config issues |
-| `:SessionSave` / `:SessionRestore` | Sessions |
+| `:AutoSession save` / `:AutoSession restore` | Sessions |
