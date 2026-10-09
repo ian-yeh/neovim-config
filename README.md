@@ -1,54 +1,61 @@
 # Ian's Neovim Config
 
+Keymaps and per-plugin usage: see [CHEATSHEET.md](CHEATSHEET.md).
+
 ## Colorschemes
 
-- [tokyonight](https://github.com/folke/tokyonight.nvim)
+- [tokyonight](https://github.com/folke/tokyonight.nvim) (default)
 - [catppuccin](https://github.com/catppuccin/nvim)
+- [github-nvim-theme](https://github.com/projekt0n/github-nvim-theme)
 
-Set via `NVIM_COLORSCHEME` in `.env`.
+Set via `NVIM_COLORSCHEME` in `.env`: `tokyonight`, `catppuccin`, or `github_dark_high_contrast`.
 
 ## Plugins
 
 ### UI
-- **bufferline** — tab/buffer bar
-- **lualine** — statusline
-- **alpha** — start screen
-- **indent-blankline** — indentation guides
-- **dressing** — improved UI inputs/selects
-- **nvim-web-devicons** — file icons
-- **which-key** — keybind hints
-- **todo-comments** — highlighted TODO/FIX/NOTE comments
-- **snacks.nvim** — misc QOL utilities
+- **bufferline** - tab bar
+- **lualine** - statusline
+- **dropbar** - winbar breadcrumbs
+- **alpha** - start screen
+- **indent-blankline** - indentation guides
+- **dressing** - improved UI inputs/selects
+- **mini.icons** - file icons (mocks nvim-web-devicons)
+- **which-key** - keybind hints
+- **todo-comments** - highlighted TODO/FIX/NOTE comments
 
 ### Navigation
-- **telescope** + fzf-native — fuzzy finder
-- **nvim-tree** — file explorer
-- **vim-tmux-navigator** — seamless tmux/nvim pane navigation
-- **auto-session** — session save/restore
-- **vim-maximizer** — maximize/restore splits
+- **telescope** + fzf-native - fuzzy finder
+- **nvim-tree** - file explorer
+- **vim-tmux-navigator** - seamless tmux/nvim pane navigation
+- **auto-session** - session save/restore
+- **vim-maximizer** - maximize/restore splits
 
 ### Editing
-- **nvim-treesitter** — syntax parsing
-- **nvim-ts-autotag** — auto-close/rename HTML tags
-- **nvim-autopairs** — auto-close brackets/quotes
-- **nvim-surround** — surround motions
-- **substitute** — exchange/substitute motions
-- **Comment.nvim** + ts-context-commentstring — smart commenting
+- **nvim-treesitter** - syntax parsing
+- **nvim-ts-autotag** - auto-close/rename HTML tags
+- **nvim-autopairs** - auto-close brackets/quotes
+- **nvim-surround** - surround motions
+- **substitute** - exchange/substitute motions
+- **Comment.nvim** + ts-context-commentstring - smart commenting
+
+### Git
+- **gitsigns** - hunk signs, inline blame, stage/reset
 
 ### LSP & Completion
-- **nvim-lspconfig** — LSP client config
-- **mason** + mason-lspconfig + mason-tool-installer — LSP/linter installer
-- **nvim-cmp** + cmp-nvim-lsp + cmp-buffer + cmp-path — completion engine
-- **LuaSnip** + friendly-snippets + cmp_luasnip — snippets
-- **lspkind** — LSP completion icons
-- **neodev** — Lua/Neovim API completion
-- **nvim-lsp-file-operations** — LSP-aware file operations
+- **nvim-lspconfig** - LSP server configs
+- **mason** + mason-lspconfig + mason-tool-installer - LSP/linter installer
+- **blink.cmp** + friendly-snippets - completion engine and snippets
+- **lazydev** - Lua/Neovim API completion
+- **nvim-lsp-file-operations** - LSP-aware file operations
 
 ### Language-specific
-- **vimtex** — LaTeX editing
-- **markdown-preview** — live Markdown preview in browser
-- **pdfreader.nvim** — PDF reading
-- **image.nvim** — inline image rendering
+- **vimtex** - LaTeX editing
+- **typst-preview** - live Typst preview (tinymist LSP)
+- **markdown-preview** - live Markdown preview in browser
+- **pdfreader.nvim** + snacks.nvim (image module only) - PDF reading
 
 ### Terminal
-- **toggleterm** — floating/split terminal
+- **toggleterm** - floating/split terminal, lazygit
+
+### Personal
+- **doorbell.nvim** - [ian-yeh/doorbell.nvim](https://github.com/ian-yeh/doorbell.nvim)

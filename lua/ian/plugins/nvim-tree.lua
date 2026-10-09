@@ -64,7 +64,7 @@ return {
       renderer = {
         -- ADD: Show git status and file icons
         add_trailing = false,
-        group_empty = true,  -- Collapse empty folders
+        group_empty = false,
         highlight_git = "all",  -- color filename text by git status, not just icon
         highlight_modified = "all",  -- color filename text for unsaved buffers
         full_name = false,

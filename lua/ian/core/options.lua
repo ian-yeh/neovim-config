@@ -41,3 +41,11 @@ vim.api.nvim_create_autocmd({ "BufEnter", "CursorHold", "CursorHoldI", "FocusGai
   command = "checktime",
   pattern = "*",
 })
+
+-- brace-based indent inside fenced code blocks in markdown
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "markdown",
+  callback = function()
+    vim.opt_local.smartindent = true
+  end,
+})

@@ -15,9 +15,9 @@ Modes: **n** normal, **i** insert, **v/x** visual, **t** terminal.
 | nvim-autopairs | Auto-close brackets/quotes | `InsertEnter` |
 | nvim-ts-autotag | Auto-close/rename HTML/JSX tags | `InsertEnter` |
 | bufferline.nvim | Tab/buffer bar (tabs mode) | on load |
-| tokyonight / catppuccin / github-theme | Colorschemes (via `.env` `NVIM_COLORSCHEME`) | on load |
-| Comment.nvim | Commenting (ts-context aware) | `BufReadPre` |
-| doorbell.nvim | Local personal plugin | always |
+| tokyonight / catppuccin / github-theme | Colorschemes - `.env` `NVIM_COLORSCHEME` = `tokyonight` (default), `catppuccin`, or `github_dark_high_contrast` | selected one on load |
+| Comment.nvim + ts-context-commentstring | Commenting (ts-context aware) | `BufReadPre` |
+| doorbell.nvim | Personal plugin (`ian-yeh/doorbell.nvim`) | always |
 | dressing.nvim | Better UI selects/inputs | `VeryLazy` |
 | dropbar.nvim | Winbar breadcrumbs (file/symbol path) | `BufReadPost` |
 | gitsigns.nvim | Git hunk signs, blame, stage/reset | `BufReadPre` |
@@ -25,10 +25,10 @@ Modes: **n** normal, **i** insert, **v/x** visual, **t** terminal.
 | mini.icons | Icon provider (replaces nvim-web-devicons) | always |
 | plenary.nvim | Lua lib (dependency) | on demand |
 | lualine.nvim | Statusline (theme follows active colorscheme) | on load |
-| markdown-preview.nvim | Browser markdown preview | `ft=markdown` |
-| nvim-cmp | Completion engine | `InsertEnter` |
+| markdown-preview.nvim | Browser markdown preview | `ft=markdown` / cmd |
+| blink.cmp + friendly-snippets | Completion engine + snippets | `InsertEnter` |
 | nvim-tree | File explorer | on load |
-| pdfreader.nvim + snacks.nvim | PDF viewing | `ft=pdf` |
+| pdfreader.nvim + snacks.nvim | PDF viewing (snacks: image module only) | `ft=pdf` / `<leader>fp` |
 | substitute.nvim | Substitute-with-motion | `BufReadPre` |
 | nvim-surround | Add/change/delete surroundings | `BufReadPre` |
 | telescope.nvim (+fzf) | Fuzzy finder | on load |
@@ -39,9 +39,11 @@ Modes: **n** normal, **i** insert, **v/x** visual, **t** terminal.
 | vim-maximizer | Maximize a split | key |
 | vimtex | LaTeX toolchain (Skim + latexmk) | always |
 | which-key.nvim | Popup keybind hints | `VeryLazy` |
-| nvim-lspconfig | LSP client config | `BufReadPre` |
-| mason.nvim | LSP/tool installer | on load |
-| typst-preview.nvim | Typst preview (tinymist is the LSP, see below) | `ft=typst` |
+| nvim-lspconfig | LSP server configs (enabled via `vim.lsp.enable`) | `BufReadPre` |
+| nvim-lsp-file-operations | LSP-aware rename/move from nvim-tree | with lspconfig |
+| lazydev.nvim | Neovim API completion for Lua | `ft=lua` |
+| mason.nvim + mason-lspconfig + mason-tool-installer | LSP/tool installer | on load |
+| typst-preview.nvim | Typst preview (tinymist is the LSP, see below) | `ft=typst` / key |
 
 ---
 
@@ -132,10 +134,10 @@ Active on `LspAttach`. Servers: ts_ls, html, cssls, tailwindcss, svelte, graphql
 | Key | Action |
 |---|---|
 | `gd` | Go to definition (Telescope) |
-| `gD` | Go to declaration |
+| `gD` | Go to declaration (falls back to definition if unsupported) |
 | `gR` | Show references (Telescope) |
-| `gi` | Go to implementation |
-| `gt` | Go to type definition |
+| `gi` | Go to implementation (Telescope) |
+| `gt` | Go to type definition (Telescope) - shadows built-in `gt` next-tab, use `<leader>tn` |
 | `K` | Hover docs |
 | `<leader>ca` | Code actions (n/v) |
 | `<leader>rn` | Smart rename |
@@ -146,9 +148,13 @@ Active on `LspAttach`. Servers: ts_ls, html, cssls, tailwindcss, svelte, graphql
 
 Jump back/forward after a `gd`: `<C-o>` / `<C-i>`.
 
+Diagnostics: virtual text on, sorted by severity, not updated in insert mode.
+
+Mason also installs (not wired to any format/lint plugin - run manually): prettier, stylua, isort, black, pylint, eslint_d.
+
 ---
 
-## Completion (nvim-cmp) - insert mode
+## Completion (blink.cmp) - insert mode
 
 | Key | Action |
 |---|---|
@@ -157,10 +163,10 @@ Jump back/forward after a `gd`: `<C-o>` / `<C-i>`.
 | `<C-b>` | Scroll docs up |
 | `<C-f>` | Scroll docs down |
 | `<C-Space>` | Trigger completion |
-| `<C-e>` | Abort/close menu |
-| `<CR>` | Confirm (no auto-select) |
+| `<C-e>` | Cancel/close menu |
+| `<CR>` | Confirm selected item (nothing preselected - pick one first) |
 
-Sources: LSP, LuaSnip snippets, buffer, path.
+Sources: LSP, snippets (friendly-snippets, native), buffer, path. Docs popup opens automatically.
 
 ---
 
@@ -229,6 +235,8 @@ Defaults: `gcc` toggle line, `gc` + motion / visual block, `gbc` block comment. 
 | `<C-space>` | Start / expand node selection |
 | `<bs>` | Shrink node selection |
 
+Parsers: json, javascript, typescript, tsx, yaml, html, css, prisma, markdown, markdown_inline, svelte, graphql, bash, lua, vim, dockerfile, gitignore, query, vimdoc, c, rust, java, typst.
+
 ---
 
 ## Git (gitsigns)
@@ -241,7 +249,7 @@ Defaults: `gcc` toggle line, `gc` + motion / visual block, `gbc` block comment. 
 | `<leader>hr` | Reset hunk |
 | `<leader>hp` | Preview hunk |
 | `<leader>hb` | Blame line (full) |
-| `<leader>tb` | Toggle inline current-line blame |
+| `<leader>tb` | Toggle inline current-line blame (on by default) |
 | `<leader>hd` | Diff this file |
 
 ---
@@ -278,7 +286,7 @@ Viewer: Skim. Compiler: latexmk.
 
 | Key | Action |
 |---|---|
-| `<leader>tw` | Toggle Typst preview |
+| `<leader>tw` | Start Typst preview (`:TypstPreview`; `:TypstPreviewStop` to stop) |
 
 Auto-exports PDF on save (tinymist).
 
@@ -287,6 +295,8 @@ Auto-exports PDF on save (tinymist).
 ## Markdown
 
 `:MarkdownPreview` / `:MarkdownPreviewToggle` / `:MarkdownPreviewStop` - browser preview.
+
+`smartindent` is on in markdown buffers (brace-based indent inside fenced code blocks).
 
 ---
 

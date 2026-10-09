@@ -36,6 +36,7 @@ return {
         "vimdoc",
         "c",
         "rust",
+        "java",
         "typst",
       },
       incremental_selection = {
