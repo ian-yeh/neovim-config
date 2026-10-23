@@ -1,5 +1,6 @@
 return {
   "nvim-treesitter/nvim-treesitter",
+  branch = "master", -- main is the incompatible rewrite (no nvim-treesitter.configs)
   event = { "BufReadPre", "BufNewFile" },
   build = ":TSUpdate",
   config = function()

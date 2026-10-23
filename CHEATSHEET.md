@@ -14,7 +14,7 @@ Modes: **n** normal, **i** insert, **v/x** visual, **t** terminal.
 | auto-session | Save/restore sessions per cwd | on load |
 | nvim-autopairs | Auto-close brackets/quotes | `InsertEnter` |
 | nvim-ts-autotag | Auto-close/rename HTML/JSX tags | `InsertEnter` |
-| bufferline.nvim | Tab/buffer bar (tabs mode) | on load |
+| bufferline.nvim | Buffer bar with LSP diagnostics | on load |
 | tokyonight / catppuccin / github-theme | Colorschemes - `.env` `NVIM_COLORSCHEME` = `tokyonight` (default), `catppuccin`, or `github_dark_high_contrast` | selected one on load |
 | Comment.nvim + ts-context-commentstring | Commenting (ts-context aware) | `BufReadPre` |
 | doorbell.nvim | Personal plugin (`ian-yeh/doorbell.nvim`) | always |
@@ -27,8 +27,13 @@ Modes: **n** normal, **i** insert, **v/x** visual, **t** terminal.
 | lualine.nvim | Statusline (theme follows active colorscheme) | on load |
 | markdown-preview.nvim | Browser markdown preview | `ft=markdown` / cmd |
 | blink.cmp + friendly-snippets | Completion engine + snippets | `InsertEnter` |
-| nvim-tree | File explorer | on load |
-| pdfreader.nvim + snacks.nvim | PDF viewing (snacks: image module only) | `ft=pdf` / `<leader>fp` |
+| blink-copilot | Copilot completion source (copilot LSP, off until `<leader>ct`) | with blink.cmp |
+| conform.nvim | Formatting, format on save (LSP fallback) | `BufWritePre` / key |
+| nvim-lint | Linting (eslint_d, pylint) | `BufReadPre` |
+| hover.nvim | `K` hover from LSP/diagnostics/man/GitHub | key |
+| mini.move | Move lines/selections | `BufReadPre` |
+| neo-tree.nvim | File explorer | on load |
+| pdfreader.nvim + snacks.nvim | PDF viewing (snacks: image module; also bufdelete, neo-tree image preview) | `ft=pdf` / `<leader>fp` |
 | substitute.nvim | Substitute-with-motion | `BufReadPre` |
 | nvim-surround | Add/change/delete surroundings | `BufReadPre` |
 | telescope.nvim (+fzf) | Fuzzy finder | on load |
@@ -40,7 +45,7 @@ Modes: **n** normal, **i** insert, **v/x** visual, **t** terminal.
 | vimtex | LaTeX toolchain (Skim + latexmk) | always |
 | which-key.nvim | Popup keybind hints | `VeryLazy` |
 | nvim-lspconfig | LSP server configs (enabled via `vim.lsp.enable`) | `BufReadPre` |
-| nvim-lsp-file-operations | LSP-aware rename/move from nvim-tree | with lspconfig |
+| nvim-lsp-file-operations | LSP-aware rename/move from neo-tree | with lspconfig |
 | lazydev.nvim | Neovim API completion for Lua | `ft=lua` |
 | mason.nvim + mason-lspconfig + mason-tool-installer | LSP/tool installer | on load |
 | typst-preview.nvim | Typst preview (tinymist is the LSP, see below) | `ft=typst` / key |
@@ -79,36 +84,52 @@ Modes: **n** normal, **i** insert, **v/x** visual, **t** terminal.
 | `<leader>tp` | Previous tab |
 | `<leader>tf` | Open current buffer in new tab |
 
+### Buffers (bufferline)
+
+| Key | Action |
+|---|---|
+| `]b` / `[b` | Next / previous buffer (built in) |
+| `<leader>bd` | Close buffer, keep window layout (snacks bufdelete) |
+
 ---
 
-## File Explorer (nvim-tree)
+## File Explorer (neo-tree)
 
 Toggle/open:
 
 | Key | Action |
 |---|---|
 | `<leader>ee` | Toggle explorer |
-| `<leader>ef` | Toggle explorer on current file |
-| `<leader>ec` | Collapse |
-| `<leader>er` | Refresh |
+| `<leader>ef` | Reveal current file in explorer |
+| `<leader>eg` | Git status (float): stage/commit/push from the tree |
+| `<leader>eb` | Open buffers (float) |
 
 Inside the tree:
 
 | Key | Action |
 |---|---|
-| `l` | Open file/folder |
+| `l` / `<CR>` | Open file/folder |
 | `h` | Close directory |
-| `t` / `<C-t>` | Open in new tab (keeps tree open) |
+| `P` | Toggle floating preview (images too) |
+| `t` | Open in new tab |
 | `v` | Open in vertical split |
 | `s` | Open in horizontal split |
-| `n` | Create file/folder |
+| `n` / `a` | Create file/folder (trailing `/` = folder) |
 | `d` | Delete |
 | `r` | Rename |
 | `y` | Copy |
 | `x` | Cut |
 | `p` | Paste |
+| `z` | Collapse all |
+| `/` | Fuzzy filter |
+| `H` | Toggle hidden files |
+| `o` + `m/s/g/n/t` | Order by modified/size/git/name/type |
+| `[g` / `]g` | Prev / next git-modified file |
+| `i` | File details |
 
-*(plus all nvim-tree default mappings; press `g?` in tree for full list)*
+Git status view: `ga` add, `gu` unstage, `gr` revert, `gc` commit, `gp` push, `A` add all.
+
+*(press `?` in the tree for the full list; tree auto-refreshes via file watcher)*
 
 ---
 
@@ -138,7 +159,9 @@ Active on `LspAttach`. Servers: ts_ls, html, cssls, tailwindcss, svelte, graphql
 | `gR` | Show references (Telescope) |
 | `gi` | Go to implementation (Telescope) |
 | `gt` | Go to type definition (Telescope) - shadows built-in `gt` next-tab, use `<leader>tn` |
-| `K` | Hover docs |
+| `K` | Hover: LSP docs, diagnostics, man pages, GitHub `#123` / `TODO(@user)` (hover.nvim) |
+| `gK` | Enter the hover window |
+| `<C-n>` / `<C-p>` | Next / previous hover source |
 | `<leader>ca` | Code actions (n/v) |
 | `<leader>rn` | Smart rename |
 | `<leader>D` | Buffer diagnostics (Telescope) |
@@ -150,7 +173,22 @@ Jump back/forward after a `gd`: `<C-o>` / `<C-i>`.
 
 Diagnostics: virtual text on, sorted by severity, not updated in insert mode.
 
-Mason also installs (not wired to any format/lint plugin - run manually): prettier, stylua, isort, black, pylint, eslint_d.
+### Formatting (conform) and linting (nvim-lint)
+
+| Key | Action |
+|---|---|
+| `<leader>mp` | Format file / selection |
+| `<leader>mt` | Toggle format on save (on by default) |
+
+Formatters: prettier (web/json/yaml/markdown), stylua, isort + black. Everything else (C/C++ via clangd, Go via gopls) falls back to LSP formatting. Linters: eslint_d (only when the project has an eslint config), pylint. `:ConformInfo` shows what runs for the current buffer.
+
+### Copilot
+
+| Key | Action |
+|---|---|
+| `<leader>ct` | Toggle Copilot (off at startup) |
+
+Completions show up in blink.cmp. First use: `:LspCopilotSignIn`.
 
 ---
 
@@ -166,7 +204,7 @@ Mason also installs (not wired to any format/lint plugin - run manually): pretti
 | `<C-e>` | Cancel/close menu |
 | `<CR>` | Confirm selected item (nothing preselected - pick one first) |
 
-Sources: LSP, snippets (friendly-snippets, native), buffer, path. Docs popup opens automatically.
+Sources: LSP, snippets (friendly-snippets, native), buffer, path, Copilot (when toggled on). Docs popup opens automatically.
 
 ---
 
@@ -228,6 +266,18 @@ Defaults: `gcc` toggle line, `gc` + motion / visual block, `gbc` block comment. 
 | `[t` | Previous todo comment |
 | `<leader>ft` | List todos (Telescope) |
 
+### mini.move
+
+`<M-h/j/k/l>` moves the current line (normal) or selection (visual). Needs Option-as-Alt in the terminal.
+
+### Folding (treesitter)
+
+All folds open by default. `za` toggle, `zc` close, `zM` close all, `zR` open all.
+
+### Editor behavior
+
+Undo history persists across sessions. Files reopen at the last cursor position. Spellcheck is on in markdown/tex/typst (`]s`/`[s` next/prev misspelling, `z=` suggestions, `zg` add word).
+
 ### Treesitter incremental selection
 
 | Key | Action |
@@ -251,6 +301,10 @@ Parsers: json, javascript, typescript, tsx, yaml, html, css, prisma, markdown, m
 | `<leader>hb` | Blame line (full) |
 | `<leader>tb` | Toggle inline current-line blame (on by default) |
 | `<leader>hd` | Diff this file |
+| `<leader>hD` | Diff against last commit |
+| `<leader>hi` | Preview hunk inline (shows deleted lines) |
+| `<leader>hS` / `<leader>hR` | Stage / reset whole buffer |
+| `<leader>hs` / `<leader>hr` (visual) | Stage / reset selected lines |
 
 ---
 

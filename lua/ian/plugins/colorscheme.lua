@@ -74,7 +74,7 @@ return {
         flavour = "mocha",
         transparent_background = true,
         integrations = {
-          nvim_tree = true,
+          neotree = true,
           gitsigns = true,
           lualine = {},
           dropbar = { enabled = true },

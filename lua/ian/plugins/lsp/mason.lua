@@ -39,7 +39,10 @@ return {
         "gopls",
         "clangd",
         "tinymist",
+        "copilot",
       },
+      -- copilot starts only via <leader>ct (see copilot.lua)
+      automatic_enable = { exclude = { "copilot" } },
     })
 
     mason_tool_installer.setup({
