@@ -98,6 +98,23 @@ return {
         options = {
           transparent = true,
         },
+        -- theme colours every markdown heading level the same; give each its own
+        groups = {
+          all = {
+            ["@markup.heading.1.markdown"] = { fg = "#ff9492", style = "bold" },
+            ["@markup.heading.2.markdown"] = { fg = "#ffb757", style = "bold" },
+            ["@markup.heading.3.markdown"] = { fg = "#71b7ff", style = "bold" },
+            ["@markup.heading.4.markdown"] = { fg = "#cb9eff", style = "bold" },
+            ["@markup.heading.5.markdown"] = { fg = "#72f088", style = "bold" },
+            ["@markup.heading.6.markdown"] = { fg = "#f0b72f", style = "bold" },
+            -- theme paints the whole neo-tree one white; colour folders, open files, dim guides
+            NeoTreeDirectoryIcon = { fg = "#cb9eff" },
+            NeoTreeDirectoryName = { fg = "#dbb7ff" },
+            NeoTreeFileNameOpened = { fg = "#72f088" },
+            NeoTreeIndentMarker = { fg = "#525964" },
+            NeoTreeExpander = { fg = "#525964" },
+          },
+        },
       })
       if colorscheme == "github_dark_high_contrast" then
         vim.cmd([[colorscheme github_dark_high_contrast]])

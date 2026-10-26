@@ -39,9 +39,11 @@ return {
         "gopls",
         "clangd",
         "tinymist",
+        "jdtls",
+        "bashls",
         "copilot",
       },
-      -- copilot starts only via <leader>ct (see copilot.lua)
+      -- copilot starts only via <leader>ct (see lspconfig.lua)
       automatic_enable = { exclude = { "copilot" } },
     })
 
@@ -53,6 +55,7 @@ return {
         "black", -- python formatter
         "pylint",
         "eslint_d",
+        "shellcheck", -- used by bashls for diagnostics
       },
     })
   end,

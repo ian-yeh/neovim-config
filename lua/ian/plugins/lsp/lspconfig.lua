@@ -98,6 +98,8 @@ return {
       "gopls",
       "clangd",
       "tinymist",
+      "jdtls",
+      "bashls",
     })
 
     vim.lsp.config("*", {

@@ -79,17 +79,15 @@ Modes: **n** normal, **i** insert, **v/x** visual, **t** terminal.
 | Key | Action |
 |---|---|
 | `<leader>to` | New tab |
-| `<leader>tx` | Close tab |
-| `<leader>tn` | Next tab |
-| `<leader>tp` | Previous tab |
 | `<leader>tf` | Open current buffer in new tab |
 
 ### Buffers (bufferline)
 
 | Key | Action |
 |---|---|
+| `<leader>tn` / `<leader>tp` | Next / previous buffer (bar order) |
 | `]b` / `[b` | Next / previous buffer (built in) |
-| `<leader>bd` | Close buffer, keep window layout (snacks bufdelete) |
+| `<leader>tx` / `<leader>bd` | Close buffer, keep window layout (snacks bufdelete) |
 
 ---
 
@@ -99,7 +97,7 @@ Toggle/open:
 
 | Key | Action |
 |---|---|
-| `<leader>ee` | Toggle explorer |
+| `<leader>ee` | Toggle explorer in all tabs (on by default; opens with every file/tab) |
 | `<leader>ef` | Reveal current file in explorer |
 | `<leader>eg` | Git status (float): stage/commit/push from the tree |
 | `<leader>eb` | Open buffers (float) |
@@ -150,7 +148,7 @@ Inside a picker: `<C-k>` prev result, `<C-j>` next result, `<C-q>` send selectio
 
 ## LSP (lspconfig)
 
-Active on `LspAttach`. Servers: ts_ls, html, cssls, tailwindcss, svelte, graphql, emmet_ls, pyright, lua_ls, gopls, clangd, tinymist.
+Active on `LspAttach`. Servers: ts_ls, html, cssls, tailwindcss, svelte, graphql, emmet_ls, pyright, lua_ls, gopls, clangd, tinymist, jdtls, bashls (shellcheck diagnostics).
 
 | Key | Action |
 |---|---|
@@ -158,7 +156,7 @@ Active on `LspAttach`. Servers: ts_ls, html, cssls, tailwindcss, svelte, graphql
 | `gD` | Go to declaration (falls back to definition if unsupported) |
 | `gR` | Show references (Telescope) |
 | `gi` | Go to implementation (Telescope) |
-| `gt` | Go to type definition (Telescope) - shadows built-in `gt` next-tab, use `<leader>tn` |
+| `gt` | Go to type definition (Telescope) - shadows built-in `gt` next-tab, use `:tabn` (`gT` still goes to previous tab) |
 | `K` | Hover: LSP docs, diagnostics, man pages, GitHub `#123` / `TODO(@user)` (hover.nvim) |
 | `gK` | Enter the hover window |
 | `<C-n>` / `<C-p>` | Next / previous hover source |
