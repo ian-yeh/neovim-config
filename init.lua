@@ -14,12 +14,11 @@ vim.api.nvim_create_autocmd("ColorScheme", {
       highlight StatusLineNC guibg=NONE ctermbg=NONE
       highlight NormalFloat guibg=NONE ctermbg=NONE
 
-      highlight NvimTreeNormal guibg=NONE ctermbg=NONE
-      highlight NvimTreeEndOfBuffer guibg=NONE ctermbg=NONE
-      highlight NvimTreeVertSplit guibg=NONE ctermbg=NONE
-      highlight NvimTreeNormalNC guibg=NONE ctermbg=NONE
-      highlight NvimTreeWinSeparator guibg=NONE ctermbg=NONE
-      highlight NvimTreeCursorLine guibg=NONE ctermbg=NONE
+      highlight NeoTreeNormal guibg=NONE ctermbg=NONE
+      highlight NeoTreeEndOfBuffer guibg=NONE ctermbg=NONE
+      highlight NeoTreeNormalNC guibg=NONE ctermbg=NONE
+      highlight NeoTreeWinSeparator guibg=NONE ctermbg=NONE
+      highlight NeoTreeCursorLine guibg=NONE ctermbg=NONE
     ]])
   end,
 })

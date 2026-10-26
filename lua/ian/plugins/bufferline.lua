@@ -1,24 +1,23 @@
 return {
   "akinsho/bufferline.nvim",
   version = "*",
+  lazy = false,
+  keys = {
+    -- [b / ]b (built in) cycle buffers
+    { "<leader>bd", function() require("snacks").bufdelete() end, desc = "Close buffer (keep window layout)" },
+  },
   opts = {
     options = {
-      mode = "tabs",
       separator_style = "slant",
+      diagnostics = "nvim_lsp",
       offsets = {
         {
-          filetype = "NvimTree",
+          filetype = "neo-tree",
           text = "File Explorer",
           text_align = "left",
           separator = true,
         }
       },
-      custom_filter = function(buf_number)
-        if vim.bo[buf_number].filetype == "NvimTree" then
-          return false
-        end
-        return true
-      end,
     },
   },
 }

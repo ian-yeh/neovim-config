@@ -2,7 +2,7 @@ return {
   "saghen/blink.cmp",
   version = "1.*",
   event = "InsertEnter",
-  dependencies = { "rafamadriz/friendly-snippets" },
+  dependencies = { "rafamadriz/friendly-snippets", "fang2hou/blink-copilot" },
   ---@module 'blink.cmp'
   ---@type blink.cmp.Config
   opts = {
@@ -33,7 +33,10 @@ return {
     },
     -- sources for autocompletion
     sources = {
-      default = { "lsp", "snippets", "buffer", "path" },
+      default = { "lsp", "snippets", "buffer", "path", "copilot" },
+      providers = {
+        copilot = { name = "copilot", module = "blink-copilot", score_offset = 100, async = true },
+      },
     },
     fuzzy = { implementation = "prefer_rust_with_warning" },
   },

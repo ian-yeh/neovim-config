@@ -54,9 +54,6 @@ return {
         opts.desc = "Go to next diagnostic"
         keymap.set("n", "]d", vim.diagnostic.goto_next, opts)
 
-        opts.desc = "Show documentation for what is under cursor"
-        keymap.set("n", "K", vim.lsp.buf.hover, opts)
-
         opts.desc = "Restart LSP"
         keymap.set("n", "<leader>rs", ":LspRestart<CR>", opts)
       end,
@@ -101,11 +98,20 @@ return {
       "gopls",
       "clangd",
       "tinymist",
+      "jdtls",
+      "bashls",
     })
 
     vim.lsp.config("*", {
       capabilities = capabilities,
     })
+
+    -- Copilot (completions via blink-copilot) is off until toggled. Sign in once with :LspCopilotSignIn
+    keymap.set("n", "<leader>ct", function()
+      local on = not vim.lsp.is_enabled("copilot")
+      vim.lsp.enable("copilot", on)
+      vim.notify("Copilot " .. (on and "enabled" or "disabled"))
+    end, { desc = "Toggle Copilot" })
 
     -- Ignore diagnostics during source % to prevent false errors
     vim.api.nvim_create_autocmd("SourcePre", {

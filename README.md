@@ -13,7 +13,8 @@ Set via `NVIM_COLORSCHEME` in `.env`: `tokyonight`, `catppuccin`, or `github_dar
 ## Plugins
 
 ### UI
-- **bufferline** - tab bar
+- **bufferline** - buffer bar with LSP diagnostics
+- **hover.nvim** - multi-source `K` hover (LSP, diagnostics, man, GitHub)
 - **lualine** - statusline
 - **dropbar** - winbar breadcrumbs
 - **alpha** - start screen
@@ -25,7 +26,7 @@ Set via `NVIM_COLORSCHEME` in `.env`: `tokyonight`, `catppuccin`, or `github_dar
 
 ### Navigation
 - **telescope** + fzf-native - fuzzy finder
-- **nvim-tree** - file explorer
+- **neo-tree** - file explorer (float preview, git status, buffers)
 - **vim-tmux-navigator** - seamless tmux/nvim pane navigation
 - **auto-session** - session save/restore
 - **vim-maximizer** - maximize/restore splits
@@ -37,6 +38,7 @@ Set via `NVIM_COLORSCHEME` in `.env`: `tokyonight`, `catppuccin`, or `github_dar
 - **nvim-surround** - surround motions
 - **substitute** - exchange/substitute motions
 - **Comment.nvim** + ts-context-commentstring - smart commenting
+- **mini.move** - move lines/selections with Alt+hjkl
 
 ### Git
 - **gitsigns** - hunk signs, inline blame, stage/reset
@@ -45,6 +47,9 @@ Set via `NVIM_COLORSCHEME` in `.env`: `tokyonight`, `catppuccin`, or `github_dar
 - **nvim-lspconfig** - LSP server configs
 - **mason** + mason-lspconfig + mason-tool-installer - LSP/linter installer
 - **blink.cmp** + friendly-snippets - completion engine and snippets
+- **blink-copilot** - Copilot completions (copilot LSP, off until toggled)
+- **conform.nvim** - formatting (format on save, LSP fallback)
+- **nvim-lint** - linting (eslint_d, pylint)
 - **lazydev** - Lua/Neovim API completion
 - **nvim-lsp-file-operations** - LSP-aware file operations
 
@@ -52,7 +57,7 @@ Set via `NVIM_COLORSCHEME` in `.env`: `tokyonight`, `catppuccin`, or `github_dar
 - **vimtex** - LaTeX editing
 - **typst-preview** - live Typst preview (tinymist LSP)
 - **markdown-preview** - live Markdown preview in browser
-- **pdfreader.nvim** + snacks.nvim (image module only) - PDF reading
+- **pdfreader.nvim** + snacks.nvim (image module, also used for bufdelete and neo-tree previews) - PDF reading
 
 ### Terminal
 - **toggleterm** - floating/split terminal, lazygit
