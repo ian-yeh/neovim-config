@@ -22,6 +22,15 @@ return {
             cond = lazy_status.has_updates,
             color = { fg = "#ff9e64" },
           },
+          {
+            function()
+              return vim.g.mkdp_clients_active == 1 and "MD preview" or "MD preview (no tab)"
+            end,
+            cond = function()
+              return vim.fn.exists("*mkdp#rpc#get_server_status") == 1 and vim.fn["mkdp#rpc#get_server_status"]() == 1
+            end,
+            color = { fg = "#72f088" },
+          },
           { "filetype" },
         },
         lualine_y = { "progress" },
