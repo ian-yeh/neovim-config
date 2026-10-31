@@ -109,6 +109,7 @@ Inside the tree:
 | `l` / `<CR>` | Open file/folder |
 | `h` | Close directory |
 | `P` | Toggle floating preview (images too) |
+| `gx` | Open with system default app (e.g. PDF in Preview) |
 | `t` | Open in new tab |
 | `v` | Open in vertical split |
 | `s` | Open in horizontal split |

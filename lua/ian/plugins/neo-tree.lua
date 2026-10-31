@@ -50,6 +50,11 @@ return {
   opts = {
     close_if_last_window = true,
     popup_border_style = "rounded",
+    commands = {
+      system_open = function(state)
+        vim.ui.open(state.tree:get_node():get_id())
+      end,
+    },
     window = {
       width = math.floor(vim.o.columns * 0.25),
       mappings = {
@@ -60,6 +65,7 @@ return {
         ["s"] = "open_split",
         ["n"] = "add",
         ["P"] = { "toggle_preview", config = { use_float = true } },
+        ["gx"] = "system_open",
       },
     },
     filesystem = {
