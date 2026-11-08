@@ -3,6 +3,9 @@ return {
   config = function()
     local lualine = require("lualine")
     local lazy_status = require("lazy.status") -- to configure lazy pending updates count
+    local function fg(group)
+      return function() return { fg = require("lualine.utils.utils").extract_highlight_colors(group, "fg") } end
+    end
 
     -- theme follows whatever colorscheme is active (see colorscheme.lua)
     lualine.setup({
@@ -20,7 +23,7 @@ return {
           {
             lazy_status.updates,
             cond = lazy_status.has_updates,
-            color = { fg = "#ff9e64" },
+            color = fg("DiagnosticWarn"),
           },
           {
             function()
@@ -29,7 +32,7 @@ return {
             cond = function()
               return vim.fn.exists("*mkdp#rpc#get_server_status") == 1 and vim.fn["mkdp#rpc#get_server_status"]() == 1
             end,
-            color = { fg = "#72f088" },
+            color = fg("DiagnosticOk"),
           },
           { "filetype" },
         },

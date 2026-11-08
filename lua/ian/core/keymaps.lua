@@ -31,10 +31,8 @@ keymap.set("n", "<C-Down>", "<cmd>resize -2<CR>", { desc = "Decrease window heig
 keymap.set("n", "<C-Left>", "<cmd>vertical resize -2<CR>", { desc = "Decrease window width" })
 keymap.set("n", "<C-Right>", "<cmd>vertical resize +2<CR>", { desc = "Increase window width" })
 
--- tab management
-keymap.set("n", "<leader>to", "<cmd>tabnew<CR>", { desc = "Open new tab" }) -- open new tab
-keymap.set("n", "<leader>tx", function() require("snacks").bufdelete() end, { desc = "Close current buffer" }) -- tabs: :tabclose
-keymap.set("n", "<leader>tn", "<cmd>BufferLineCycleNext<CR>", { desc = "Next buffer (bufferline order)" }) -- tabs: gt / gT
+-- buffers
+keymap.set("n", "<leader>tx", function() require("snacks").bufdelete() end, { desc = "Close current buffer" })
+keymap.set("n", "<leader>tn", "<cmd>BufferLineCycleNext<CR>", { desc = "Next buffer (bufferline order)" })
 keymap.set("n", "<leader>tp", "<cmd>BufferLineCyclePrev<CR>", { desc = "Previous buffer (bufferline order)" })
-keymap.set("n", "<leader>tf", "<cmd>tabnew %<CR>", { desc = "Open current buffer in new tab" }) --  move current buffer to new tab
 

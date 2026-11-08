@@ -7,9 +7,12 @@ return {
     { "<leader>bd", function() require("snacks").bufdelete() end, desc = "Close buffer (keep window layout)" },
   },
   opts = {
-    highlights = {
-      buffer_selected = { bold = false, italic = false },
-    },
+    -- per-theme tab colors come from lua/ian/theme.lua
+    highlights = function(defaults)
+      return vim.tbl_deep_extend("force", require("ian.theme").bufferline(defaults), {
+        buffer_selected = { bold = false, italic = false },
+      })
+    end,
     options = {
       separator_style = "thin",
       indicator = { style = "none" },

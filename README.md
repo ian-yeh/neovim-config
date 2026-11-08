@@ -8,7 +8,7 @@ Keymaps and per-plugin usage: see [CHEATSHEET.md](CHEATSHEET.md).
 - [catppuccin](https://github.com/catppuccin/nvim)
 - [github-nvim-theme](https://github.com/projekt0n/github-nvim-theme)
 
-Set via `NVIM_COLORSCHEME` in `.env`: `tokyonight`, `catppuccin`, or `github_dark_high_contrast`.
+Set via `"colorscheme"` in `config.json` (gitignored): `tokyonight`, `catppuccin`, `github_dark_high_contrast`, or `vscode-light`. Profiles live in `lua/ian/theme.lua`; switch live with `:Theme <name>`.
 
 ## Plugins
 
@@ -19,7 +19,6 @@ Set via `NVIM_COLORSCHEME` in `.env`: `tokyonight`, `catppuccin`, or `github_dar
 - **dropbar** - winbar breadcrumbs
 - **alpha** - start screen
 - **indent-blankline** - indentation guides
-- **dressing** - improved UI inputs/selects
 - **mini.icons** - file icons (mocks nvim-web-devicons)
 - **which-key** - keybind hints
 - **todo-comments** - highlighted TODO/FIX/NOTE comments
@@ -29,7 +28,6 @@ Set via `NVIM_COLORSCHEME` in `.env`: `tokyonight`, `catppuccin`, or `github_dar
 - **neo-tree** - file explorer (float preview, git status, buffers)
 - **vim-tmux-navigator** - seamless tmux/nvim pane navigation
 - **auto-session** - session save/restore
-- **vim-maximizer** - maximize/restore splits
 
 ### Editing
 - **nvim-treesitter** - syntax parsing
@@ -37,8 +35,7 @@ Set via `NVIM_COLORSCHEME` in `.env`: `tokyonight`, `catppuccin`, or `github_dar
 - **nvim-autopairs** - auto-close brackets/quotes
 - **nvim-surround** - surround motions
 - **substitute** - exchange/substitute motions
-- **Comment.nvim** + ts-context-commentstring - smart commenting
-- **mini.move** - move lines/selections with Alt+hjkl
+- **ts-context-commentstring** - JSX/TSX-aware native commenting
 
 ### Git
 - **gitsigns** - hunk signs, inline blame, stage/reset

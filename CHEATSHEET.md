@@ -15,15 +15,13 @@ Modes: **n** normal, **i** insert, **v/x** visual, **t** terminal.
 | nvim-autopairs | Auto-close brackets/quotes | `InsertEnter` |
 | nvim-ts-autotag | Auto-close/rename HTML/JSX tags | `InsertEnter` |
 | bufferline.nvim | Buffer bar with LSP diagnostics | on load |
-| tokyonight / catppuccin / github-theme | Colorschemes - `.env` `NVIM_COLORSCHEME` = `tokyonight` (default), `catppuccin`, or `github_dark_high_contrast` | selected one on load |
-| Comment.nvim + ts-context-commentstring | Commenting (ts-context aware) | `BufReadPre` |
+| tokyonight / catppuccin / github-theme | Colorschemes - `config.json` `"colorscheme"` = `tokyonight` (default), `catppuccin`, `github_dark_high_contrast`, or `vscode-light`; `:Theme <name>` switches live (profiles in `lua/ian/theme.lua`) | selected one on load |
+| ts-context-commentstring | JSX/TSX/Svelte-aware commentstrings for native `gc` | `BufReadPre` |
 | doorbell.nvim | Personal plugin (`ian-yeh/doorbell.nvim`) | always |
-| dressing.nvim | Better UI selects/inputs | `VeryLazy` |
 | dropbar.nvim | Winbar breadcrumbs (file/symbol path) | `BufReadPost` |
 | gitsigns.nvim | Git hunk signs, blame, stage/reset | `BufReadPre` |
 | indent-blankline (ibl) | Indent guides (`▏`) | `BufReadPre` |
 | mini.icons | Icon provider (replaces nvim-web-devicons) | always |
-| plenary.nvim | Lua lib (dependency) | on demand |
 | lualine.nvim | Statusline (theme follows active colorscheme) | on load |
 | markdown-preview.nvim | Browser markdown preview | `ft=markdown` / cmd |
 | blink.cmp + friendly-snippets | Completion engine + snippets | `InsertEnter` |
@@ -31,7 +29,6 @@ Modes: **n** normal, **i** insert, **v/x** visual, **t** terminal.
 | conform.nvim | Formatting, format on save (LSP fallback) | `BufWritePre` / key |
 | nvim-lint | Linting (eslint_d, pylint) | `BufReadPre` |
 | hover.nvim | `K` hover from LSP/diagnostics/man/GitHub | key |
-| mini.move | Move lines/selections | `BufReadPre` |
 | neo-tree.nvim | File explorer | on load |
 | pdfreader.nvim + snacks.nvim | PDF viewing (snacks: image module; also bufdelete, neo-tree image preview) | `ft=pdf` / `<leader>fp` |
 | substitute.nvim | Substitute-with-motion | `BufReadPre` |
@@ -41,7 +38,6 @@ Modes: **n** normal, **i** insert, **v/x** visual, **t** terminal.
 | todo-comments.nvim | Highlight/jump TODO/FIXME | `BufReadPre` |
 | toggleterm.nvim | Terminal management | keys/cmd |
 | nvim-treesitter | Syntax/indent/parsers | `BufReadPre` |
-| vim-maximizer | Maximize a split | key |
 | vimtex | LaTeX toolchain (Skim + latexmk) | always |
 | which-key.nvim | Popup keybind hints | `VeryLazy` |
 | nvim-lspconfig | LSP server configs (enabled via `vim.lsp.enable`) | `BufReadPre` |
@@ -69,17 +65,9 @@ Modes: **n** normal, **i** insert, **v/x** visual, **t** terminal.
 | `<leader>sh` | Split horizontally |
 | `<leader>se` | Make splits equal size |
 | `<leader>sx` | Close current split |
-| `<leader>sm` | Maximize/restore split (vim-maximizer) |
 | `<C-Up>` / `<C-Down>` | Increase / decrease height |
 | `<C-Left>` / `<C-Right>` | Decrease / increase width |
 | `<C-h/j/k/l>` | Navigate splits/tmux panes (tmux-navigator) |
-
-### Tabs
-
-| Key | Action |
-|---|---|
-| `<leader>to` | New tab |
-| `<leader>tf` | Open current buffer in new tab |
 
 ### Buffers (bufferline)
 
@@ -106,11 +94,10 @@ Inside the tree:
 
 | Key | Action |
 |---|---|
-| `l` / `<CR>` | Open file/folder |
+| `l` / `<CR>` / `t` | Open file/folder (as a buffer) |
 | `h` | Close directory |
 | `P` | Toggle floating preview (images too) |
 | `gx` | Open with system default app (e.g. PDF in Preview) |
-| `t` | Open in new tab |
 | `v` | Open in vertical split |
 | `s` | Open in horizontal split |
 | `n` / `a` | Create file/folder (trailing `/` = folder) |
@@ -253,9 +240,9 @@ Inside terminal: `<esc>` or `jk` to normal mode; `<C-h/j/k/l>` move between wind
 | `cs"'` | Change surrounding `"` to `'` |
 | `ds(` | Delete surrounding `()` |
 
-### Comment.nvim
+### Commenting (built-in)
 
-Defaults: `gcc` toggle line, `gc` + motion / visual block, `gbc` block comment. Treesitter-context aware (JSX/TSX/Svelte/HTML).
+`gcc` toggle line, `gc` + motion / visual selection. Treesitter-context aware (JSX/TSX/Svelte/HTML).
 
 ### todo-comments
 
@@ -264,10 +251,6 @@ Defaults: `gcc` toggle line, `gc` + motion / visual block, `gbc` block comment. 
 | `]t` | Next todo comment |
 | `[t` | Previous todo comment |
 | `<leader>ft` | List todos (Telescope) |
-
-### mini.move
-
-`<M-h/j/k/l>` moves the current line (normal) or selection (visual). Needs Option-as-Alt in the terminal.
 
 ### Folding (treesitter)
 
