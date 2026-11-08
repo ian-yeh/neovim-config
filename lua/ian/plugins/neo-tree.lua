@@ -50,6 +50,18 @@ return {
   opts = {
     close_if_last_window = true,
     popup_border_style = "rounded",
+    default_component_configs = {
+      icon = {
+        folder_closed = "\u{F0256}",
+        folder_open = "\u{F0DCF}",
+        folder_empty = "\u{F0256}",
+      },
+      indent = {
+        with_expanders = true,
+        expander_collapsed = "\u{F460}",
+        expander_expanded = "\u{F47C}",
+      },
+    },
     commands = {
       system_open = function(state)
         vim.ui.open(state.tree:get_node():get_id())
@@ -76,6 +88,16 @@ return {
         hide_gitignored = false,
         hide_by_name = { ".git", "node_modules", "__pycache__", ".cache" },
         never_show = { ".DS_Store" },
+      },
+      components = {
+        -- root shows just the folder name, not the full path
+        name = function(config, node, state)
+          local result = require("neo-tree.sources.common.components").name(config, node, state)
+          if node:get_depth() == 1 then
+            result.text = vim.fn.fnamemodify(node.path, ":t")
+          end
+          return result
+        end,
       },
     },
   },

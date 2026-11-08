@@ -13,12 +13,6 @@ vim.api.nvim_create_autocmd("ColorScheme", {
       highlight StatusLine guibg=NONE ctermbg=NONE
       highlight StatusLineNC guibg=NONE ctermbg=NONE
       highlight NormalFloat guibg=NONE ctermbg=NONE
-
-      highlight NeoTreeNormal guibg=NONE ctermbg=NONE
-      highlight NeoTreeEndOfBuffer guibg=NONE ctermbg=NONE
-      highlight NeoTreeNormalNC guibg=NONE ctermbg=NONE
-      highlight NeoTreeWinSeparator guibg=NONE ctermbg=NONE
-      highlight NeoTreeCursorLine guibg=NONE ctermbg=NONE
     ]])
   end,
 })

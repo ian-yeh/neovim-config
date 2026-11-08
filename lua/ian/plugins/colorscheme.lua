@@ -121,4 +121,24 @@ return {
       end
     end,
   },
+  -- vscode (matches VSCodium light theme)
+  {
+    "Mofiqul/vscode.nvim",
+    priority = 200,
+    lazy = colorscheme ~= "vscode",
+    config = function()
+      require("vscode").setup({
+        style = "light",
+        -- theme gives neo-tree's indent column a grey background
+        group_overrides = {
+          NeoTreeIndentMarker = { fg = "#D2D2D2", bg = "NONE" },
+          NeoTreeExpander = { fg = "#616161", bg = "NONE" },
+          NeoTreeDimText = { fg = "#A0A0A0", bg = "NONE" },
+        },
+      })
+      if colorscheme == "vscode" then
+        vim.cmd([[colorscheme vscode]])
+      end
+    end,
+  },
 }

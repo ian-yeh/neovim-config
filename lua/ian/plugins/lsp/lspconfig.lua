@@ -19,8 +19,7 @@ return {
 
         opts.desc = "Go to declaration"
         keymap.set("n", "gD", function()
-          local client = vim.lsp.get_clients({ bufnr = ev.buf })[1]
-          if client and client.supports_method("textDocument/declaration") then
+          if #vim.lsp.get_clients({ bufnr = ev.buf, method = "textDocument/declaration" }) > 0 then
             vim.lsp.buf.declaration()
           else
             vim.lsp.buf.definition()
