@@ -14,19 +14,11 @@ return {
       })
     end,
     options = {
-      separator_style = "thin",
+      separator_style = { "│", "│" }, -- centered line on both sides so tabs don't shift when switching
       indicator = { style = "none" },
       color_icons = false,
       tab_size = 20,
       diagnostics = "nvim_lsp",
-      offsets = {
-        {
-          filetype = "neo-tree",
-          text = "File Explorer",
-          text_align = "left",
-          separator = true,
-        }
-      },
     },
   },
 }

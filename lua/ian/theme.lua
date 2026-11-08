@@ -59,7 +59,6 @@ M.profiles = {
       ["@markup.heading.5.markdown"] = { fg = "#72f088", bold = true },
       ["@markup.heading.6.markdown"] = { fg = "#f0b72f", bold = true },
       -- theme paints all of neo-tree white
-      NeoTreeDirectoryIcon = { fg = "#cb9eff" },
       NeoTreeDirectoryName = { fg = "#dbb7ff" },
       NeoTreeFileNameOpened = { fg = "#72f088" },
       NeoTreeIndentMarker = { fg = "#525964" },
@@ -80,6 +79,12 @@ M.profiles = {
       NeoTreeIndentMarker = { fg = "#D2D2D2", bg = "NONE" },
       NeoTreeExpander = { fg = "#616161", bg = "NONE" },
       NeoTreeDimText = { fg = "#A0A0A0", bg = "NONE" },
+      -- VSCodium editor: grey line numbers, faint current line and indent guides
+      LineNr = { fg = "#6E7681" },
+      CursorLineNr = { fg = "#171184" },
+      CursorLine = { bg = "#F7F7F7" },
+      IblIndent = { fg = "#EDEDED" },
+      IblScope = { fg = "#D3D3D3" },
     },
   },
 }
@@ -143,7 +148,7 @@ function M.bufferline(defaults)
   for _, k in ipairs({ "separator", "separator_visible", "separator_selected", "offset_separator", "tab_separator", "tab_separator_selected" }) do
     hl[k].fg = t.border
   end
-  for _, k in ipairs({ "background", "buffer_visible", "tab", "tab_close", "close_button", "close_button_visible" }) do
+  for _, k in ipairs({ "background", "buffer_visible", "tab", "tab_close", "close_button", "close_button_visible", "trunc_marker" }) do
     hl[k].fg = t.fg
   end
   hl.buffer_selected.fg, hl.tab_selected.fg, hl.close_button_selected.fg = t.sel_fg, t.sel_fg, t.sel_fg

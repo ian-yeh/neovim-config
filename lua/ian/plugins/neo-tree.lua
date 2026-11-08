@@ -62,11 +62,27 @@ return {
 	opts = {
 		close_if_last_window = true,
 		popup_border_style = "rounded",
+		event_handlers = {
+			{
+				event = "neo_tree_window_after_open",
+				handler = function(args)
+					vim.wo[args.winid].number = true
+					vim.wo[args.winid].relativenumber = true
+				end,
+			},
+		},
 		default_component_configs = {
 			icon = {
 				folder_closed = "\u{F0256}",
 				folder_open = "\u{F0DCF}",
 				folder_empty = "\u{F0256}",
+				-- file/folder glyphs in the file name colour (no per-filetype colours, like VSCodium)
+				provider = function(icon, node)
+					if node.type == "file" then
+						icon.text = require("nvim-web-devicons").get_icon(node.name) or icon.text
+					end
+					icon.highlight = "NeoTreeFileName"
+				end,
 			},
 			indent = {
 				with_expanders = true,
