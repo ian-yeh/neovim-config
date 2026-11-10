@@ -28,7 +28,7 @@ return {
       graphql = { "prettier" },
     },
     format_on_save = function(bufnr)
-      if vim.g.disable_autoformat then
+      if vim.g.disable_autoformat or vim.bo[bufnr].filetype == "c" or vim.api.nvim_buf_get_name(bufnr):match("%.h$") then
         return
       end
       return { lsp_format = "fallback", timeout_ms = 1000 }

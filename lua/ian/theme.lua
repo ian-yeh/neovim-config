@@ -139,7 +139,11 @@ vim.api.nvim_create_autocmd("ColorScheme", {
 -- bufferline calls this on every colorscheme change (see plugins/bufferline.lua)
 function M.bufferline(defaults)
   local t = profile_for(vim.g.colors_name).tabs
-  if not t then return {} end
+  if not t then
+    -- no tab colours: draw separators like window borders instead of bright white
+    local fg = string.format("#%06x", vim.api.nvim_get_hl(0, { name = "WinSeparator", link = false }).fg or 0x808080)
+    return { separator = { fg = fg }, separator_visible = { fg = fg }, separator_selected = { fg = fg } }
+  end
   local hl = {}
   for k in pairs(defaults.highlights) do
     hl[k] = { bg = k:match("_selected$") and t.sel_bg or t.bg }
